@@ -1,0 +1,237 @@
+Microsoft Windows [Version 10.0.22000.2538]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\windows\system32>use chitkara
+'use' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\windows\system32>mongosh
+Current Mongosh Log ID: 66d49c367c541452872710bb
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.0
+Using MongoDB:          7.0.14
+Using Mongosh:          2.3.0
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2024-09-01T21:56:33.346+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> use chitkara
+switched to db chitkara
+chitkara> db.createCollection("new")
+{ ok: 1 }
+chitkara> db.new.insertOne({name:"ankur",age:28,class:"b9"})
+{
+  acknowledged: true,
+chitkara>
+}
+chitkara> db.new.insertMany([{ "name": "dksdf", "age": 40, "marks": 99, "sub": "eng" },
+... { "name": "ofdge", "age": 20, "marks": 80, "sub": "math" },
+... { "name": "dfgae", "age": 30, "marks": 70, "sub": "dso" },
+... { "name": "jjksd", "age": 50, "marks": 60, "sub": "dfgad" }])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('66d49d227c541452872710bd'),
+    '1': ObjectId('66d49d227c541452872710be'),
+    '2': ObjectId('66d49d227c541452872710bf'),
+    '3': ObjectId('66d49d227c541452872710c0')
+  }
+}
+chitkara> db.new.estimatedDocumentCount()
+5
+chitkara> db.new.countDocuments()
+5
+chitkara> db.new.updateMany({sub:"eng"}, {$set:{sub:"datascience"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+chitkara> db.new.updateOne({name:"ankur"},  { $set: { grade: "B" } })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+chitkara> db.new.find({age:40,marks:99})
+[
+  {
+    _id: ObjectId('66d49d227c541452872710bd'),
+    name: 'dksdf',
+    age: 40,
+    marks: 99,
+    sub: 'datascience'
+  }
+]
+chitkara> db.new.find({age:{$gte 18},marks:{$gte 80}})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:23)
+
+> 1 | db.new.find({age:{$gte 18},marks:{$gte 80}})
+    |                        ^
+  2 |
+
+chitkara> db.new.find({age:{$gte 18},marks:{$gte 80}})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:23)
+
+> 1 | db.new.find({age:{$gte 18},marks:{$gte 80}})
+    |                        ^
+  2 |
+
+chitkara> db.new.find(age:{$gte: 18},marks:{$gte: 80}})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:15)
+
+> 1 | db.new.find(age:{$gte: 18},marks:{$gte: 80}})
+    |                ^
+  2 |
+
+chitkara> db.new.find({age: {$gte: 18}, marks: {$gte: 80}})
+[
+  {
+    _id: ObjectId('66d49d227c541452872710bd'),
+    name: 'dksdf',
+    age: 40,
+    marks: 99,
+    sub: 'datascience'
+  },
+  {
+    _id: ObjectId('66d49d227c541452872710be'),
+    name: 'ofdge',
+    age: 20,
+    marks: 80,
+    sub: 'math'
+  }
+]
+chitkara>
+
+chitkara>
+
+chitkara> db.new.find($or: {age:[ {$gte: 30}}, {marks: {$gte:80}}]})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:15)
+
+> 1 | db.new.find($or: {age:[ {$gte: 30}}, {marks: {$gte:80}}]})
+    |                ^
+  2 |
+
+chitkara> db.new.find({$or: [age: {$gte: 30}},{marks: {$gte: 80}}]})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:22)
+
+> 1 | db.new.find({$or: [age: {$gte: 30}},{marks: {$gte: 80}}]})
+    |                       ^
+  2 |
+
+chitkara> db.ne.find({$or: [{age: {$gte: 30}}, {marks: {$gte: 80}}]})
+
+chitkara>
+(To exit, press Ctrl+C again or Ctrl+D or type .exit)
+chitkara> db.new.find({$or: [{age: {$gte: 30}},{marks: {$gte: 80}}]})
+[
+  {
+    _id: ObjectId('66d49d227c541452872710bd'),
+    name: 'dksdf',
+    age: 40,
+    marks: 99,
+    sub: 'datascience'
+  },
+  {
+    _id: ObjectId('66d49d227c541452872710be'),
+    name: 'ofdge',
+    age: 20,
+    marks: 80,
+    sub: 'math'
+  },
+  {
+    _id: ObjectId('66d49d227c541452872710bf'),
+    name: 'dfgae',
+    age: 30,
+    marks: 70,
+    sub: 'dso'
+  },
+  {
+    _id: ObjectId('66d49d227c541452872710c0'),
+    name: 'jjksd',
+    age: 50,
+    marks: 60,
+    sub: 'dfgad'
+  }
+]
+chitkara> db.new.find({age:{$exists:true}})
+[
+  {
+    _id: ObjectId('66d49cd67c541452872710bc'),
+    name: 'ankur',
+    age: 28,
+    class: 'b9',
+    grade: 'B'
+  },
+  {
+    _id: ObjectId('66d49d227c541452872710bd'),
+    name: 'dksdf',
+    age: 40,
+    marks: 99,
+    sub: 'datascience'
+  },
+  {
+    _id: ObjectId('66d49d227c541452872710be'),
+    name: 'ofdge',
+    age: 20,
+    marks: 80,
+    sub: 'math'
+  },
+  {
+    _id: ObjectId('66d49d227c541452872710bf'),
+    name: 'dfgae',
+    age: 30,
+    marks: 70,
+    sub: 'dso'
+  },
+  {
+    _id: ObjectId('66d49d227c541452872710c0'),
+    name: 'jjksd',
+    age: 50,
+    marks: 60,
+    sub: 'dfgad'
+  }
+]
+chitkara> db.new.find({age:{$exists:true},marks:{$type:"int"}})
+[
+  {
+    _id: ObjectId('66d49d227c541452872710bd'),
+    name: 'dksdf',
+    age: 40,
+    marks: 99,
+    sub: 'datascience'
+  },
+  {
+    _id: ObjectId('66d49d227c541452872710be'),
+    name: 'ofdge',
+    age: 20,
+    marks: 80,
+    sub: 'math'
+  },
+  {
+    _id: ObjectId('66d49d227c541452872710bf'),
+    name: 'dfgae',
+    age: 30,
+    marks: 70,
+    sub: 'dso'
+  },
+  {
+    _id: ObjectId('66d49d227c541452872710c0'),
+    name: 'jjksd',
+    age: 50,
+    marks: 60,
+    sub: 'dfgad'
+  }
+]
